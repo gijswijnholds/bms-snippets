@@ -1,0 +1,19 @@
+# Eclipse settings #
+.settings/
+
+# Classpath info #
+.classpath
+
+# project file #
+.project
+
+# wtpmodule #
+.wtpmodules
+
+# Ignore output directories #
+#############################
+target/
+build/
+bin/
+/bin/
+src/main/webapp/WEB-INF
