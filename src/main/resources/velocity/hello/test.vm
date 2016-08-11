@@ -1,0 +1,17 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+
+Text: ${intro}
+
+<div class="row">
+
+#foreach( $code in $codes )
+<div class="col-md-4">
+ <pre><code class="language-java">
+ ${code}
+ </code></pre>
+</div>
+#end
+
+</div>
+#end
