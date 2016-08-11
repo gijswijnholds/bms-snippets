@@ -22,4 +22,8 @@ public class Snippet {
     public String getCode() {
         return code;
     }
+
+    public String versionControl() {
+        return "chapter 4: version control";
+    }
 }
