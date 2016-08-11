@@ -24,6 +24,6 @@ public class Snippet {
     }
 
     public String versionControl() {
-        return "chapter 5: control DTAP";
+        return "chapter 4: version control";
     }
 }
