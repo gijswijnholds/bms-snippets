@@ -14,7 +14,8 @@ public class Application {
 
         port(getHerokuAssignedPort());
         
-        get("/hello", (req, res) -> "Hello Sylvan and Zeeger, did you like this snippet: "
+        get("/hello",
+            (req, res) -> "This is the acceptance server. \n Hello Sylvan and Zeeger, did you like this snippet: "
             + snippetDao.getAllSnippets().iterator().next().getCode());
 
     }
