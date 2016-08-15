@@ -1,0 +1,17 @@
+language: java
+jdk:
+- oraclejdk8
+before_install:
+- mvn clean
+after_success:
+- mvn test jacoco:report coveralls:report
+deploy:
+  skip_cleanup: true
+  provider: heroku
+  api_key:
+    secure: imgZ6IlX6+o506b9Ye5jvJQwl0zy3ypEPQ41ejEv2ATO/RF+VcFJjhHFqMjyu20k4HF8RIRMIBspa9zKFtIXWilXh+knQB5oQ/QMf768DdyleOxwhcYbZltqqvXBEVN5RHvBb+AjKamZN5t91D+jSQHtdMCtMGgZbDiMvjAshioBrh2K6ChbQMn3pTA2d54/mBKb5QvxMvNT/IZjzHyLmNBjo3L9eDk8s6SYAS8aFJ5eP25qb0BKW0si3aZ+Xey8DUqIqE92qVvmFymwv2zJMGPO0GfWu9L3rfnJ1sIN+arPyHsMCetCU8EZ3Xpo6NjF89iMjKQg8vHmQ1lUWJhQKXto8RcEv2CBCL9pS+NdczFViMVV9Hk2dFVUo80UFwWFA/IraTis7kXFeWEHjF1FhldvzMS5gqaK5Qa3UOrIDs6MGDwTuNxyed/sfdh2mrM3ofgmhkeH9OcPoUuhzjIXTEMgNM4BiP7OEkJgycmhzk194vRgACRxhjtYPq+GJEEQQZIFU8Jxtg8yf0wz+ZNsNThfMHg0LIMLAIakltfCyPE0QWmyYeCIrloKdy2eGCfVwXSNlwT6kUho4jyhwzt3psp9OpHQPWzCj9Vy6UxJTrVjGzBYcN0+VreD7thziiEnlL+Oq/Js3G2DmOpi9M2YdhF9sjCZEPk7rLAYbVDy6aM=
+  app:
+    acceptance: bms-snippets-acceptance 
+    master: bms-snippets
+  on:
+    repo: gijswijnholds/bms-snippets

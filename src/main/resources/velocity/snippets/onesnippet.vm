@@ -1,0 +1,28 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+
+<style>
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: none;
+}
+</style>
+		
+<!-- Header -->
+<header id="header" class="alt">
+	<div class="inner">
+		<h1>The ${name} snippet in ${language-display} (chapter ${chapter})</h1>
+	</div>
+</header>
+
+<div id="wrapper">
+	<div class="col-md-2">
+	</div>
+	<div class="col-md-8">
+		<pre><code class="language-java">${code}</code></pre>
+	</div>
+	<div class="col-md-2">
+	</div>
+</div>
+
+#end

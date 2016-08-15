@@ -3,19 +3,45 @@ package app;
 import static spark.Spark.get;
 import static spark.Spark.port;
 
-import app.snippet.SnippetDao;
+import java.io.IOException;
+
+import app.controllers.HelloController;
+import app.controllers.IndexController;
+import app.controllers.SnippetController;
+import app.snippet.SnippetUrlDao;
+import spark.Spark;
+
 
 public class Application {
 
-    public static SnippetDao snippetDao;
+    public static SnippetUrlDao snippetUrlDao;
 
-    public static void main(String[] args) {
-        snippetDao = new SnippetDao();
+    public static void main(String[] args) throws IOException {
 
+        // SnippetFetcher fetcher = new SnippetFetcher();
+        Spark.staticFileLocation("/public");
         port(getHerokuAssignedPort());
-        
-        get("/hello", (req, res) -> "Hello Sylvan and Zeeger, did you like this snippet: "
-            + snippetDao.getAllSnippets().iterator().next().getCode());
+
+        snippetUrlDao = new SnippetUrlDao(true);
+
+
+        get("/index", (request, response) -> {
+            return IndexController.serveHomePage();
+        });
+
+        get("/hello", (request, response) -> {
+            return HelloController.serveHelloPage();
+        });
+
+        get("/snippets/:language", (request, response) -> {
+            return SnippetController.serveAllSnippetsPage(request, response);
+        });
+
+        get("/snippets/:language/:chapter/:name", (request, response) -> {
+            return SnippetController.serveOneSnippetPage(request, response);
+        });
+
+        //    get("*", ViewUtil.notFound);
 
     }
 
@@ -26,4 +52,9 @@ public class Application {
         }
         return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
     }
+
+    public String easterEgg() {
+        return "hallo";
+    }
+
 }

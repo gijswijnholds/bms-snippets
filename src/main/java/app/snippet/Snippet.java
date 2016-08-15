@@ -22,4 +22,5 @@ public class Snippet {
     public String getCode() {
         return code;
     }
+
 }
