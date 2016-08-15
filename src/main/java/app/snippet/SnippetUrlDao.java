@@ -1,5 +1,9 @@
 package app.snippet;
 
+import static app.util.GitHubConstants.CSHARP_LANG;
+import static app.util.GitHubConstants.JAVA_BASE_DIR;
+import static app.util.GitHubConstants.JAVA_LANG;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,11 +19,6 @@ import app.util.GitHubConnector;
 
 public class SnippetUrlDao {
 
-    public static final String JAVA_BASE_DIR = "src/java/eu/sig/training";
-    public static final String CSHARP_BASE_DIR = "src/csharp/eu/sig/training";
-    public static final String JAVA_LANG = "Java";
-    public static final String CSHARP_LANG = "C#";
-
     private static final Snippet mockSnippet = new Snippet(1, "mocker",
         "public mocker() {\n return \" You have been mocked! \"; }");
     
@@ -29,16 +28,14 @@ public class SnippetUrlDao {
 
     public List<GHContent> snippetUrls;
 
-    public SnippetUrlDao() throws IOException {
-        initialize();
-    }
-
-    public SnippetUrlDao(boolean flag) {
-
-    }
-
-    public void initialize() throws IOException {
-        snippetRefs = ImmutableList.copyOf(buildSnippetRefs());
+    public SnippetUrlDao(boolean connect) throws IOException {
+        if (connect) {
+            snippetRefs = ImmutableList.copyOf(buildSnippetRefs());
+        } else {
+            List<SnippetReference> mockList = new ArrayList<SnippetReference>();
+            mockList.add(new SnippetReference(JAVA_LANG, 1, JAVA_BASE_DIR + "/ch01/mockSnippet.java"));
+            snippetRefs = ImmutableList.copyOf(mockList);
+        }
     }
 
     private List<SnippetReference> buildSnippetRefs() throws IOException {
@@ -85,14 +82,6 @@ public class SnippetUrlDao {
             result = mockSnippet;
         }
         return result;
-    }
-
-    public List<SnippetReference> getSnippetRefsByChapter(List<SnippetReference> refs, int chapter) {
-        return refs.stream().filter(r -> r.getChapter() == chapter).collect(Collectors.toList());
-    }
-
-    public List<SnippetReference> getSnippetRefsByLang(List<SnippetReference> refs, String lang) {
-        return refs.stream().filter(r -> r.getLanguage().equals(lang)).collect(Collectors.toList());
     }
     
     public Snippet getMockSnippet() {
