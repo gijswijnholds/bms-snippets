@@ -1,8 +1,5 @@
 package app.util;
 
-import static app.util.GitHubConstants.REPOSITORY_NAME;
-import static app.util.GitHubConstants.USER_NAME;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -17,7 +14,8 @@ import com.google.common.base.Charsets;
 import com.google.common.io.CharStreams;
 
 public class GitHubConnector {
-
+    public static final String USER_NAME = "oreillymedia";
+    public static final String REPOSITORY_NAME = "building_maintainable_software";
 
     private static String token;
 

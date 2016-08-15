@@ -3,46 +3,42 @@ package app;
 import static spark.Spark.get;
 import static spark.Spark.port;
 
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import app.controllers.HelloController;
-import app.controllers.IndexController;
-import app.controllers.SnippetController;
+import app.snippet.Snippet;
 import app.snippet.SnippetUrlDao;
+import spark.ModelAndView;
 import spark.Spark;
+import spark.template.velocity.VelocityTemplateEngine;
 
 
 public class Application {
 
-    public static SnippetUrlDao snippetUrlDao;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         // SnippetFetcher fetcher = new SnippetFetcher();
         Spark.staticFileLocation("/public");
+
         port(getHerokuAssignedPort());
+        // get("/snippets/:chapter", );
+        get("/hello", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            model.put("intro", "Hello Sylvan and Zeeger, did you like this snippet: ");
+            SnippetUrlDao snippetUrlDao = new SnippetUrlDao();
+            Snippet snippet = snippetUrlDao.getSnippet(snippetUrlDao.getSnippetRefs().get(0));
 
-        snippetUrlDao = new SnippetUrlDao(true);
+            String code = snippet.getCode();
+            List<String> codes = new ArrayList<String>();
+            codes.add(code);
+            codes.add(code);
+            model.put("codes", codes); //snippetUrlDao.getUrls()); // snippetDao.getAllSnippets().iterator().next().getCode());
 
-
-        get("/index", (request, response) -> {
-            return IndexController.serveHomePage();
-        });
-
-        get("/hello", (request, response) -> {
-            return HelloController.serveHelloPage();
-        });
-
-        get("/snippets/:language", (request, response) -> {
-            return SnippetController.serveAllSnippetsPage(request, response);
-        });
-
-        get("/snippets/:language/:chapter/:name", (request, response) -> {
-            return SnippetController.serveOneSnippetPage(request, response);
-        });
-
-        //    get("*", ViewUtil.notFound);
-
+            return new ModelAndView(model, "/velocity/hello/test.vm");
+        }, new VelocityTemplateEngine());
     }
 
     static int getHerokuAssignedPort() {
